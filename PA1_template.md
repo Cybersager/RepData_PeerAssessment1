@@ -1,15 +1,10 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
-```{r}
 
+```r
 #Load data (i.e. read.csv())
 
 activity <- read.csv("activity.csv")
@@ -17,17 +12,22 @@ activity <- read.csv("activity.csv")
 #Change class for the date variable
 
 activity$date <- as.Date(activity$date)
-
 ```
 
 ## What is mean total number of steps taken per day?
 
-```{r}
 
+```r
 #Histogram of daily steps
 
 library(ggplot2)
+```
 
+```
+## Warning: package 'ggplot2' was built under R version 3.1.3
+```
+
+```r
 steps.date <- aggregate(steps ~ date, data = activity, FUN = sum ,na.rm=TRUE)
 
 names(steps.date) <- c("date","steps")
@@ -40,22 +40,34 @@ histogram1 <- ggplot(steps.date,aes(x = steps))+
 
 
 histogram1
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
 
+```r
 #mean of total number of steps per day
 
 mean(steps.date$steps, na.rm = TRUE)
+```
 
+```
+## [1] 10766.19
+```
+
+```r
 #median of total number of steps  per day
 
 median(steps.date$steps, na.rm = TRUE)
+```
 
+```
+## [1] 10765
 ```
 
 ## What is the average daily activity pattern?
 
-```{r}
 
+```r
 #aggregate steps per interval, calculating the mean across days
 
 
@@ -64,25 +76,43 @@ steps.interval <- aggregate(steps ~ interval, data = activity, FUN = mean ,na.rm
 names(steps.interval) <- c("interval","steps")
 
 time.series.plot <- plot(steps.interval, type = "l", main = "Time series plot type = l " )
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
+```r
 time.series.plot
+```
 
+```
+## NULL
+```
+
+```r
 #5-mins interval with maximum number of steps
 
 steps.interval$interval[which.max(steps.interval$steps)]
+```
 
-
+```
+## [1] 835
 ```
 
 ## Imputing missing values
 
 
-```{r}
 
+```r
 #total number of missing values
 
 sum(is.na(activity))
+```
 
+```
+## [1] 2304
+```
+
+```r
 #replace the NA's with the median number of steps for that period
 
 
@@ -106,25 +136,35 @@ names(steps.date) <- c("Date", "steps")
 histogram2 <- qplot(steps, data = steps.date, geom="histogram", xlab = "Daily number of steps", binwidth = 300)
 
 histogram2
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
+```r
 #mean of total number of steps by day
 
 mean(steps.date$steps , na.rm = TRUE)
+```
 
+```
+## [1] 10766.19
+```
 
-
+```r
 #median of total number of steps by day
 
 median(steps.date$steps , na.rm = TRUE)
+```
 
-
+```
+## [1] 10766.19
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
 
-```{r}
 
+```r
 #add the Weekday/weekend identifier
 
 activity$week <- ifelse(weekdays(activity$date) == "Saturday" | weekdays(activity$date) == "Sunday" ,"weekend","weekday")
@@ -143,6 +183,6 @@ intsteps2$median.steps <- round(intsteps2$median.steps)
 
 
 ggplot(intsteps2, aes(x = interval, y = mean.steps)) + ylab("Number of Steps") + geom_line() + facet_grid(weekday~.)
-
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
