@@ -186,3 +186,9 @@ ggplot(intsteps2, aes(x = interval, y = mean.steps)) + ylab("Number of Steps") +
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+
+```r
+ggplot(intsteps2, aes(x = interval, y = mean.steps)) + ylab("Number of Steps") + geom_line() + facet_grid(weekday~.)
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-2.png) 

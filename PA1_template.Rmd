@@ -144,5 +144,5 @@ intsteps2$median.steps <- round(intsteps2$median.steps)
 
 ggplot(intsteps2, aes(x = interval, y = mean.steps)) + ylab("Number of Steps") + geom_line() + facet_grid(weekday~.)
 
-
+ggplot(intsteps2, aes(x = interval, y = mean.steps)) + ylab("Number of Steps") + geom_line() + facet_grid(weekday~.)
 ```
